@@ -22,6 +22,7 @@ class echoservice extends \mod_lti\local\ltiservice\service_base {
         parent::__construct();
         $this->id = 'echoservice';
         $this->name = get_string('servicename', 'ltiservice_echoservice');
+        $this->unsigned = true;
 
     }
 
