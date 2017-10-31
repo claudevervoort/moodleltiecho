@@ -37,7 +37,7 @@ class echoresource extends \mod_lti\local\ltiservice\resource_base {
             $contenttype = $response->get_content_type();
         }
         $isdelete = $response->get_request_method() === 'DELETE';
-        $results = !empty($contenttype) && ($contenttype === $this->formats[1]);
+        $results = !empty($contenttype) && ($contenttype === $this->formats[0]);
 
         try {
             if (!$this->check_tool_proxy(null, $response->get_request_data())) {
@@ -51,6 +51,7 @@ class echoresource extends \mod_lti\local\ltiservice\resource_base {
                 case 'GET':
                     $echo = new \stdClass();
                     $echo->{"id"}= $echoid;
+                    $response->set_code(200);
                     $response->set_body(json_encode($echo));
                     break;
                 case 'POST':
@@ -60,6 +61,7 @@ class echoresource extends \mod_lti\local\ltiservice\resource_base {
                     break;
                 case 'DELETE':
                     $response->set_code(204);
+                    $response->set_reason('Echo deleted');
                     break;
                 default:  // Should not be possible.
                     throw new \Exception(null, 405);
